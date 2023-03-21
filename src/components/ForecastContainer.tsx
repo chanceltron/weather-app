@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DayCard } from './DayCard';
 import { DegreeToggle } from './DegreeToggle';
-import { WeatherData, CityCountry, DayJson } from './types';
+import { WeatherData, CityCountry, DayJson } from '../services/types';
 import { ZipCode } from './ZipCode';
 import { weatherApiCall } from '../services/services';
 

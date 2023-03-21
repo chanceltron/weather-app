@@ -1,6 +1,6 @@
 type IProps = { degreeTypeCelsius: boolean; data: WeatherData };
 import moment from 'moment';
-import type { WeatherData } from './types';
+import type { WeatherData } from '../services/types';
 
 export const DayCard = ({ data, degreeTypeCelsius }: IProps) => {
   const { date, temp, feelsLike, humidity, windSpeed, description, imgId } =

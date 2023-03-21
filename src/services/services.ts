@@ -1,4 +1,4 @@
-import { CityCountry, DayJson, WeatherData } from '../components/types';
+import { CityCountry, DayJson, WeatherData } from './types';
 
 export const weatherApiCall = (
   url: string,
