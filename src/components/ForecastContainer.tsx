@@ -3,6 +3,7 @@ import { DayCard } from './DayCard';
 import { DegreeToggle } from './DegreeToggle';
 import { WeatherData, CityCountry, DayJson } from './types';
 import { ZipCode } from './ZipCode';
+import { weatherApiCall } from '../services/services';
 
 export const ForecastContainer = () => {
   const [degreeTypeCelsius, setDegreeTypeCelsius] = useState<boolean>(false);
@@ -19,32 +20,11 @@ export const ForecastContainer = () => {
   const appId = `&appid=${import.meta.env.VITE_API_KEY}`;
 
   useEffect(() => {
-    try {
-      fetch(baseUrl + zip + degreeTypeName + appId).then((res) => {
-        res
-          .json()
-          .then((json) => {
-            setCityCountry({
-              city: json.city.name,
-              country: json.city.country,
-            });
-            return json.list
-              .filter((day: DayJson) => day.dt_txt.includes('00:00:00'))
-              .map((day: DayJson) => ({
-                date: day.dt,
-                temp: day.main.temp,
-                feelsLike: day.main.feels_like,
-                humidity: day.main.humidity,
-                windSpeed: day.wind.speed,
-                description: day.weather[0].description,
-                imgId: day.weather[0].id,
-              }));
-          })
-          .then((data) => setWeatherData(data));
-      });
-    } catch (err) {
-      console.error('There was a problem: ', err);
-    }
+    weatherApiCall(
+      baseUrl + zip + degreeTypeName + appId,
+      setCityCountry,
+      setWeatherData
+    );
   }, [degreeTypeCelsius, zipCode]);
 
   return (

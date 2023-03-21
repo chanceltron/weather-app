@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function ZipCode({ setZipCode }: any) {
+export function ZipCode({ setZipCode }: { setZipCode: (a: string) => void }) {
   const [zip, setZip] = useState<string>('');
 
   return (
