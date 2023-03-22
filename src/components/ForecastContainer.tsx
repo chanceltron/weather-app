@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { DayCard } from './DayCard';
 import { DegreeToggle } from './DegreeToggle';
-import { WeatherData, CityCountry, ResponseData } from '../services/types';
+import { WeatherData, CityCountry } from '../services/types';
 import { ZipCode } from './ZipCode';
-import { WeatherService } from '../services/services';
+import { getWeatherData } from '../services/services';
 
 export const ForecastContainer = () => {
   const [degreeTypeCelsius, setDegreeTypeCelsius] = useState<boolean>(false);
@@ -19,21 +19,17 @@ export const ForecastContainer = () => {
   const degreeTypeName = `&units=${degreeTypeCelsius ? 'metric' : 'imperial'}`;
   const appId = `&appid=${import.meta.env.VITE_API_KEY}`;
 
-  const [makeRequest, loading, data] = WeatherService(
-    baseUrl + zip + degreeTypeName + appId
-  );
-
   useEffect(() => {
-    makeRequest();
-    setCityCountry(data.cityCountry);
-    setWeatherData(data.weatherData);
+    getWeatherData(baseUrl + zip + degreeTypeName + appId).then((res) => {
+      if (res) {
+        setWeatherData(res.weatherData);
+        setCityCountry(res.cityCountry);
+      }
+    });
   }, [degreeTypeCelsius, zipCode]);
 
   return (
     <div className='mx-auto p-2 max-w-7xl'>
-      <h1 className='bg-red-600'>
-        {loading ? 'Loading...' : data ? JSON.stringify(data) : 'No data yet'}
-      </h1>
       <h1 className='bg-teal-800 rounded-lg py-8 text-white font-semibold text-4xl text-center'>
         5-Day Forecast
       </h1>
