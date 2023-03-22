@@ -41,3 +41,8 @@ export type DayJson = {
   ];
   wind: { speed: number; deg: number; gust: number };
 };
+
+export type ResponseData = {
+  weatherData: WeatherData[];
+  cityCountry: CityCountry;
+};
